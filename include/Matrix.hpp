@@ -8,11 +8,12 @@ class Matrix {
 public:
   Matrix(std::vector<std::vector<float>> matrix);
 
+  // TODO: Implement optimized matrix multiplication.
   Matrix operator*(const Matrix &otherMatrix) const;
 
   std::vector<std::vector<float>>
-  column_by_rows(const Matrix otherMatrix) const;
-  std::vector<std::vector<float>> matrix() const;
+  column_by_rows(const Matrix &otherMatrix) const;
+  const std::vector<std::vector<float>> &matrix() const;
 
   void show_matrix() const;
 

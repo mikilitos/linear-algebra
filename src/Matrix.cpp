@@ -4,14 +4,15 @@
 #include <iostream>
 #include <stdexcept>
 
-Matrix::Matrix(std::vector<std::vector<float>> matrix) : matrix_(matrix) {
-  if (matrix.size() < 1) {
+Matrix::Matrix(std::vector<std::vector<float>> matrix)
+    : matrix_(std::move(matrix)) {
+  if (matrix_.size() < 1) {
     return;
   }
 
   // Check if is a valid matrix
-  int valid = matrix[0].size();
-  for (auto rows : matrix) {
+  int valid = matrix_[0].size();
+  for (const auto &rows : matrix_) {
     if (valid != rows.size()) {
       throw std::invalid_argument("Sizes of matrix is incosistent.");
     }
@@ -19,7 +20,7 @@ Matrix::Matrix(std::vector<std::vector<float>> matrix) : matrix_(matrix) {
 }
 
 void Matrix::show_matrix() const {
-  for (auto row : matrix_) {
+  for (const auto &row : matrix_) {
     for (auto number : row) {
       std::cout << number << " ";
     }
@@ -28,7 +29,7 @@ void Matrix::show_matrix() const {
 }
 
 std::vector<std::vector<float>>
-Matrix::column_by_rows(const Matrix otherMatrix) const {
+Matrix::column_by_rows(const Matrix &otherMatrix) const {
 
   std::vector<std::vector<float>> product(row_size());
 
@@ -60,10 +61,12 @@ Matrix::column_by_rows(const Matrix otherMatrix) const {
   return product;
 }
 
-std::vector<std::vector<float>> Matrix::matrix() const { return matrix_; }
+const std::vector<std::vector<float>> &Matrix::matrix() const {
+  return matrix_;
+}
 
 std::size_t Matrix::column_size() const {
-  for (auto row : matrix_) {
+  for (const auto &row : matrix_) {
     return row.size();
   }
   return 0;
