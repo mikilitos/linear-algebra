@@ -1,5 +1,5 @@
 // TODO
-#include "../include/Matrix.hpp"
+#include "Matrix.hpp"
 
 #include <iostream>
 #include <stdexcept>
