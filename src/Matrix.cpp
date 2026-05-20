@@ -44,7 +44,7 @@ Matrix::column_by_rows(const Matrix otherMatrix) const {
 
   // Calculation
   for (int row = 0; row < matrix_.size(); ++row) {
-    int productRes = 0;
+    float productRes = 0;
     for (int otherMatrixCols = 0; otherMatrixCols < otherMatrix.column_size();
          ++otherMatrixCols) {
       for (int otherMatrixRows = 0; otherMatrixRows < otherMatrix.row_size();
