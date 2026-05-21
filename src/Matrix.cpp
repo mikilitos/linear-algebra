@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <unordered_set>
 
 Matrix::Matrix(std::vector<std::vector<float>> matrix)
     : matrix_(std::move(matrix)) {
@@ -59,6 +60,33 @@ Matrix::column_by_rows(const Matrix &otherMatrix) const {
   }
 
   return product;
+}
+
+std::vector<std::vector<float>>
+Matrix::permutation(const std::vector<int> &order) const {
+  if (order.size() != column_size()) {
+    throw std::invalid_argument(
+        "Invalid permutation: the number of permutation indices must match the "
+        "number of columns");
+  }
+
+  std::vector<std::vector<float>> matrixPermutation(
+      column_size(), std::vector<float>(column_size(), 0));
+
+  std::unordered_set<int> seen;
+
+  for (int row = 0; row < order.size(); ++row) {
+    if (seen.count(order[row])) {
+      throw std::invalid_argument("You cant repeat the column in permutations");
+    }
+    if (order[row] > order.size() || order[row] < 0) {
+      throw std::invalid_argument("Column does not exist");
+    }
+    seen.insert(order[row]);
+    matrixPermutation[row][order[row]] = 1;
+  }
+
+  return matrixPermutation;
 }
 
 const std::vector<std::vector<float>> &Matrix::matrix() const {

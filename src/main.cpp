@@ -1,4 +1,5 @@
 #include "Matrix.hpp"
+#include <iostream>
 #include <vector>
 
 int main() {
@@ -10,7 +11,14 @@ int main() {
   Matrix myMatrix2(matrix2);
 
   Matrix product = myMatrix1.column_by_rows(myMatrix2);
-  product.show_matrix();
+
+  myMatrix1.show_matrix();
+  std::cout << "\n";
+
+  std::vector<int> order = {0, 2, 1};
+
+  Matrix matrixPermutation = myMatrix1.permutation(order);
+  matrixPermutation.show_matrix();
 
   return 0;
 }

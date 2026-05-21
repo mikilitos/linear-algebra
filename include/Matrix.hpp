@@ -15,6 +15,9 @@ public:
   column_by_rows(const Matrix &otherMatrix) const;
   const std::vector<std::vector<float>> &matrix() const;
 
+  std::vector<std::vector<float>>
+  permutation(const std::vector<int> &order) const;
+
   void show_matrix() const;
 
   std::pair<size_t, size_t> matrix_size() const;
