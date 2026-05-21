@@ -29,8 +29,7 @@ void Matrix::show_matrix() const {
   }
 }
 
-std::vector<std::vector<float>>
-Matrix::column_by_rows(const Matrix &otherMatrix) const {
+Matrix Matrix::column_by_rows(const Matrix &otherMatrix) const {
 
   std::vector<std::vector<float>> product(row_size());
 
@@ -59,11 +58,26 @@ Matrix::column_by_rows(const Matrix &otherMatrix) const {
     }
   }
 
-  return product;
+  Matrix res(product);
+
+  return res;
 }
 
-std::vector<std::vector<float>>
-Matrix::permutation(const std::vector<int> &order) const {
+Matrix Matrix::permutation_cols_res(const std::vector<int> &order) const {
+  Matrix matrixPermutation = permutation_cols(order);
+  Matrix res = column_by_rows(matrixPermutation);
+
+  return res;
+}
+
+Matrix Matrix::permutation_rows_res(const std::vector<int> &order) const {
+  Matrix matrixPermutation = permutation_rows(order);
+  Matrix res(matrixPermutation.column_by_rows(matrix_));
+
+  return res;
+}
+
+Matrix Matrix::permutation_cols(const std::vector<int> &order) const {
   if (order.size() != column_size()) {
     throw std::invalid_argument(
         "Invalid permutation: the number of permutation indices must match the "
@@ -86,7 +100,37 @@ Matrix::permutation(const std::vector<int> &order) const {
     matrixPermutation[row][order[row]] = 1;
   }
 
-  return matrixPermutation;
+  Matrix res(matrixPermutation);
+
+  return res;
+}
+
+Matrix Matrix::permutation_rows(const std::vector<int> &order) const {
+  if (order.size() != row_size()) {
+    throw std::invalid_argument(
+        "Invalid permutation: the number of permutation indices must match the "
+        "number of rows");
+  }
+
+  std::vector<std::vector<float>> matrixPermutation(
+      row_size(), std::vector<float>(row_size(), 0));
+
+  std::unordered_set<int> seen;
+
+  for (int row = 0; row < order.size(); ++row) {
+    if (seen.count(order[row])) {
+      throw std::invalid_argument("You cant repeat the rows in permutations");
+    }
+    if (order[row] > order.size() || order[row] < 0) {
+      throw std::invalid_argument("Row does not exist");
+    }
+    seen.insert(order[row]);
+    matrixPermutation[row][order[row]] = 1;
+  }
+
+  Matrix res(matrixPermutation);
+
+  return res;
 }
 
 const std::vector<std::vector<float>> &Matrix::matrix() const {

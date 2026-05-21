@@ -11,12 +11,16 @@ public:
   // TODO: Implement optimized matrix multiplication.
   Matrix operator*(const Matrix &otherMatrix) const;
 
-  std::vector<std::vector<float>>
-  column_by_rows(const Matrix &otherMatrix) const;
+  Matrix column_by_rows(const Matrix &otherMatrix) const;
   const std::vector<std::vector<float>> &matrix() const;
 
-  std::vector<std::vector<float>>
-  permutation(const std::vector<int> &order) const;
+  Matrix permutation_rows_res(const std::vector<int> &order) const;
+
+  Matrix permutation_cols_res(const std::vector<int> &order) const;
+
+  Matrix permutation_rows(const std::vector<int> &order) const;
+
+  Matrix permutation_cols(const std::vector<int> &order) const;
 
   void show_matrix() const;
 

@@ -17,8 +17,18 @@ int main() {
 
   std::vector<int> order = {0, 2, 1};
 
-  Matrix matrixPermutation = myMatrix1.permutation(order);
+  Matrix matrixPermutation = myMatrix1.permutation_cols(order);
   matrixPermutation.show_matrix();
+
+  std::cout << "\n";
+  Matrix matrixPermutationColumnRes = myMatrix1.permutation_cols_res(order);
+
+  matrixPermutationColumnRes.show_matrix();
+
+  std::cout << "\n";
+  Matrix matrixPermutationRowsRes = myMatrix1.permutation_rows_res({1, 0});
+
+  matrixPermutationRowsRes.show_matrix();
 
   return 0;
 }
